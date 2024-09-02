@@ -9,6 +9,7 @@ from rest_framework.viewsets import ModelViewSet
 from .models import Menu, Booking
 from django.contrib.auth.models import User
 from .serializers import MenuSerializer, BookingSerializer, UserSerializer
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 
 def index(request):
@@ -27,6 +28,7 @@ class SingleMenuItemView(RetrieveUpdateAPIView, DestroyAPIView):
 
 
 class BookingViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
 
@@ -34,6 +36,3 @@ class BookingViewSet(ModelViewSet):
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-
-#    permission_classes = [permissions.IsAuthenticated]
